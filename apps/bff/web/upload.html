@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数据导入台 · stock-advice</title>
+<link rel="stylesheet" href="/static/upload.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">▦</div>
+      <div>
+        <h1>数据导入台</h1>
+        <div class="sub" id="dbInfo">本地增量包 → DuckDB</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <input class="date-in" id="dateIn" type="text" placeholder="留空=用文件名日期" maxlength="8" title="⚠️ 一般留空。只有「文件名不带日期」的包（如 每日指标.zip）才需要填，用来指定这些包的目标交易日。填了也不会覆盖文件名自带的日期。">
+      <button class="btn btn-ghost" id="btnRefresh">刷新</button>
+      <button class="btn btn-ghost" id="btnMeta" title="重算所有表的真实最新日期（约 1-2 分钟）">重算元数据</button>
+      <button class="btn btn-ghost" id="btnPurge" title="删除「已成功导入过」的数据包副本（不碰未导入的文件，不影响库内数据）">清理已导入包 <span id="purgeN"></span></button>
+      <a class="btn btn-ghost" href="/">返回</a>
+    </div>
+  </header>
+
+  <section class="panel cov loading" id="covPanel">
+    <div class="cov-head">
+      <div class="cov-ring loading" id="covRing"><span id="covPct">·</span><small>%</small></div>
+      <div class="cov-main">
+        <div class="cov-title"><b id="covTitle"><span class="cov-spin"></span>正在读取覆盖度…</b></div>
+        <div class="cov-sub muted" id="covSub">正在读 table_meta（缓存 60 秒，一般 1 秒内出结果）</div>
+        <div class="cov-cats" id="covCats"></div>
+      </div>
+    </div>
+    <div class="cov-stale" id="covStale" hidden>
+      <span class="stale-ico">⚠️</span>
+      <div class="stale-txt">
+        <b id="covStaleTitle"></b>
+        <span id="covStaleDesc"></span>
+      </div>
+    </div>
+    <div class="cov-wait" id="covWait" hidden>
+      <span class="wait-ico">📦</span>
+      <div class="wait-txt">
+        <b id="covWaitTitle"></b>
+        <span id="covWaitDesc"></span>
+      </div>
+      <button class="btn btn-ghost wait-btn" id="btnWaitReload" title="重新扫描本地包目录">重扫</button>
+    </div>
+    <div class="cov-missing" id="covMissing" hidden>
+      <div class="cov-missing-head">🔴 还缺这些（按提示补包再传即可）</div>
+      <div class="cov-missing-body" id="covMissingBody"></div>
+    </div>
+  </section>
+
+  <main class="grid">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>1 · 上传文件</h2>
+        <div class="muted">支持 .zip / .csv，可多选；日期从文件名自动识别</div>
+      </div>
+
+      <div class="drop" id="drop">
+        <div class="drop-icon">⇪</div>
+        <div class="drop-title">把 zip / csv 拖到这里</div>
+        <div class="muted">或 <button class="link" id="btnPick">选择文件</button>（支持一次多个）</div>
+        <input type="file" id="fileInput" multiple accept=".zip,.csv" hidden>
+      </div>
+
+      <div id="fileList" class="files"></div>
+
+      <div class="panel-foot" id="importBar" hidden>
+        <label class="chk"><input type="checkbox" id="chkAll"> 全选</label>
+        <span class="muted" id="selInfo">已选 0 个</span>
+        <label class="chk" title="默认跳过已导入过的文件（按内容指纹判断）">
+          <input type="checkbox" id="chkDup"> 允许重复导入
+        </label>
+        <label class="chk" title="DuckDB 被其它任务占用时，后台排队等锁释放后自动导入">
+          <input type="checkbox" id="chkQueue"> 等锁（≤30 分钟）
+        </label>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost" id="btnDry">预演</button>
+        <button class="btn btn-primary" id="btnImport" title="导入成功后自动删除该数据包（副本），避免占盘">导入到 DuckDB</button>
+      </div>
+      <div class="muted" style="margin-top:6px;font-size:12px">
+        🗑 导入成功的数据包会自动删除（含判重跳过的）；删除结果在下方「导入结果」里可见。
+      </div>
+
+      <div id="progress" class="progress" hidden>
+        <div class="progress-head"><span id="progText">准备中…</span><span id="progPct">0%</span></div>
+        <div class="bar"><i id="progBar"></i></div>
+      </div>
+
+      <div id="results" class="results"></div>
+    </section>
+
+    <aside class="side">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>每日必备清单</h2>
+          <div class="muted">灰=未入库｜绿=已到位</div>
+        </div>
+        <div id="covTables" class="tables muted"><div class="cov-skel"></div><div class="cov-skel"></div><div class="cov-skel"></div><div class="cov-skel"></div><div class="cov-skel"></div><div class="cov-skel"></div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>需要哪些包</h2></div>
+        <div id="packList" class="help">读取中…</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>最近上传批次</h2></div>
+        <div id="batches" class="batches muted">读取中…</div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot muted">
+    导入逻辑：按目标日 DELETE 旧数据 → INSERT（<b>同一事务</b>）→ 校验「入库行数 = 源行数」，不等则整体回滚。
+    <br>上传后原件保留在 <code>data/uploads/&lt;batch&gt;/</code>，可随时重导；导入成功的副本自动清理。
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+<script src="/static/upload.js"></script>
+</body>
+</html>
