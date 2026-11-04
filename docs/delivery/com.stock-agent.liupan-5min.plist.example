@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  示例，不要直接 load。
+  把下面的绝对路径换成自己的检出目录和 python。
+  脚本自己会跳过周末和非交易时段，并在重叠时跳过，所以 StartInterval=300 可以整天挂着。
+  不安装、不代下单、不改先手分。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.stock-agent.liupan-5min</string>
+  <key>StartInterval</key>
+  <integer>300</integer>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>WorkingDirectory</key>
+  <string>/ABS/PATH/stock-agent-app/apps/bff</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/ABS/PATH/stock-agent-app/apps/bff/scripts/liupan_5min_append.py</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>TZ</key>
+    <string>Asia/Shanghai</string>
+    <key>OPENCLAW_WORKSPACE</key>
+    <string>/Users/YOU/.openclaw-autoclaw/workspace</string>
+    <key>STOCK_ADVICE_DB</key>
+    <string>/ABS/PATH/taobao_minute.duckdb</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/liupan-5min.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/liupan-5min.err.log</string>
+</dict>
+</plist>

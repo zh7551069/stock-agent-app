@@ -1,0 +1,33 @@
+# 密钥与本机凭据（不要提交）
+.auth
+.secret
+.env
+**/.auth
+**/.secret
+
+# 种子里的备份不入库
+*.bak
+*.bak.*
+**/*.bak*
+
+# 行情缓存、轨迹、账本、溢写（可能含真实行情或持仓）
+data/
+out/
+**/*.parquet
+**/*.sqlite
+**/*.sqlite-wal
+**/*.sqlite-shm
+**/liupan_trace.jsonl
+**/liupan_latest.json
+**/liupan_error.log
+**/liupan_5min.lock
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+.DS_Store
+**/.DS_Store
+._*

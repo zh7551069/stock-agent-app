@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>登录 · 选股复盘</title>
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/static/icons/icon-192.png">
+<style>
+  /* 与 web/app.css 同一套 token（Orbix Dark Trader）：明度分层、无阴影、2px 线性图标 */
+  :root {
+    --bg-canvas: #000000;
+    --bg-sheet: #1a1a1a;
+    --bg-surface: #1d1d1d;
+    --bg-raised: #2e2e2e;
+
+    --line: #1f1f1f;
+    --line-strong: #303030;
+    --line-focus: #fafafa;
+
+    --t1: #ffffff;
+    --t2: #fafafa;
+    --t3: #909090;
+    --t4: #6b6b6b;
+
+    --rise: #ca4064;
+    --rise-text: #e0546f;
+
+    --radius: 12px;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg-canvas);
+    color: var(--t1);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+                 "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    display: flex;
+    padding: calc(24px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
+             calc(24px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
+  }
+
+  /* 用 margin:auto 而不是 align-items:center ——
+     屏幕比内容矮时，flex 居中会把顶部裁掉，margin:auto 则会自然退化为可滚动。 */
+  .shell { width: 100%; max-width: 400px; margin: auto; }
+
+  /* ── 品牌 ── */
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 34px; }
+  .mark {
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 9px;
+    background: var(--bg-sheet);
+  }
+  .mark svg { width: 19px; height: 19px; stroke: var(--t1); }
+  .wordmark {
+    font-size: 15px; font-weight: 600; letter-spacing: .12em; color: var(--t3);
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 27px; font-weight: 700; letter-spacing: -.01em; color: var(--t1);
+  }
+  .sub {
+    margin: 0 0 30px;
+    font-size: 13.5px; line-height: 1.5; color: var(--t4);
+  }
+
+  /* ── 表单 ── */
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block; margin-bottom: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--t3);
+  }
+  .input-wrap { position: relative; }
+  input[type="text"], input[type="password"] {
+    width: 100%; height: 48px;
+    padding: 0 14px;
+    font-size: 16px;            /* 16px 避免 iOS 聚焦时自动放大 */
+    color: var(--t1);
+    background: var(--bg-sheet);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    outline: none;
+    transition: border-color .16s var(--ease), background .16s var(--ease);
+  }
+  input[type="password"] { padding-right: 62px; }
+  input::placeholder { color: var(--t4); }
+  input:focus {
+    border-color: var(--line-focus);
+    background: var(--bg-surface);
+  }
+
+  .peek {
+    position: absolute; right: 4px; top: 4px;
+    height: 40px; padding: 0 12px;
+    font-size: 12.5px; color: var(--t3);
+    background: transparent; border: 0; border-radius: 9px;
+    cursor: pointer;
+  }
+  .peek:hover { color: var(--t1); background: var(--bg-raised); }
+
+  /* ── 记住我 ── */
+  .remember {
+    display: flex; align-items: center; gap: 9px;
+    margin: 18px 0 24px;
+    font-size: 13.5px; color: var(--t3);
+    cursor: pointer; user-select: none;
+  }
+  .remember input {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; margin: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 5px;
+    background: var(--bg-sheet);
+    cursor: pointer;
+    position: relative;
+    transition: border-color .16s var(--ease), background .16s var(--ease);
+  }
+  .remember input:checked {
+    background: var(--t1);
+    border-color: var(--t1);
+  }
+  .remember input:checked::after {
+    content: "";
+    position: absolute; left: 5px; top: 1.5px;
+    width: 5px; height: 9px;
+    border: 2px solid var(--bg-canvas);
+    border-top: 0; border-left: 0;
+    transform: rotate(42deg);
+  }
+
+  /* ── 错误提示（不用弹框） ── */
+  .err {
+    display: none;
+    align-items: flex-start; gap: 9px;
+    margin: 0 0 18px;
+    padding: 11px 13px;
+    font-size: 13px; line-height: 1.45;
+    color: var(--rise-text);
+    background: rgba(202, 64, 100, .12);
+    border: 1px solid rgba(202, 64, 100, .38);
+    border-radius: 10px;
+  }
+  .err.show { display: flex; }
+  .err svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 1px; stroke: var(--rise-text); }
+
+  /* ── 提交 ── */
+  button[type="submit"] {
+    width: 100%; height: 50px;
+    font-size: 16px; font-weight: 600;
+    color: var(--bg-canvas);
+    background: var(--t1);
+    border: 0; border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity .16s var(--ease), transform .1s var(--ease);
+  }
+  button[type="submit"]:hover { opacity: .88; }
+  button[type="submit"]:active { transform: scale(.988); }
+  button[type="submit"]:disabled { opacity: .45; cursor: default; }
+
+  .foot {
+    margin-top: 30px;
+    font-size: 12px; line-height: 1.6; color: var(--t4);
+    text-align: center;
+  }
+  .foot code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--t3);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="brand">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 17.5 9 11l3.5 3L20 5"/>
+        <path d="M4 20.5h16"/>
+      </svg>
+    </div>
+    <div class="wordmark">选股复盘</div>
+  </div>
+
+  <h1>登录</h1>
+  <p class="sub">该服务仅限授权设备访问，请输入凭据继续。</p>
+
+  <div class="err" id="err" role="alert" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5 21 19.5H3z"/><path d="M12 9.5v4.5M12 17h.01"/>
+    </svg>
+    <span id="err-text"></span>
+  </div>
+
+  <form id="form" method="post" action="/login" novalidate>
+    <input type="hidden" name="next" id="next" value="/">
+
+    <div class="field">
+      <label for="username">用户名</label>
+      <div class="input-wrap">
+        <input type="text" id="username" name="username" placeholder="stock"
+               autocomplete="username" autocapitalize="none" autocorrect="off"
+               spellcheck="false" enterkeyhint="next">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">密码</label>
+      <div class="input-wrap">
+        <input type="password" id="password" name="password"
+               autocomplete="current-password" enterkeyhint="go">
+        <button type="button" class="peek" id="peek" aria-label="显示密码">显示</button>
+      </div>
+    </div>
+
+    <label class="remember" for="remember">
+      <input type="checkbox" id="remember" name="remember" value="1" checked>
+      记住我（30 天内免登录）
+    </label>
+
+    <button type="submit" id="submit">登录</button>
+  </form>
+
+  <p class="foot">
+    本机直连 <code>127.0.0.1:8770</code> 无需登录<br>
+    stock-advice-agent
+  </p>
+</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var form = document.getElementById("form");
+  var errBox = document.getElementById("err");
+  var errText = document.getElementById("err-text");
+  var pwd = document.getElementById("password");
+  var user = document.getElementById("username");
+  var peek = document.getElementById("peek");
+  var submit = document.getElementById("submit");
+
+  // next：只接受站内相对路径，和服务端 _safe_next 保持一致
+  var next = params.get("next") || "/";
+  if (next.charAt(0) !== "/" || next.slice(0, 2) === "//") next = "/";
+  document.getElementById("next").value = next;
+
+  // 错误用内联提示，不弹 alert
+  var err = params.get("err");
+  var msg = "";
+  if (err === "bad") {
+    msg = "用户名或密码不正确，请重试。";
+  } else if (err === "locked") {
+    var wait = parseInt(params.get("wait") || "0", 10);
+    msg = wait > 0
+      ? "尝试次数过多，请约 " + Math.ceil(wait / 60) + " 分钟后再试。"
+      : "尝试次数过多，请稍后再试。";
+  }
+  if (msg) {
+    errText.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  // 有错误时优先聚焦密码框，否则聚焦用户名
+  (msg ? pwd : user).focus({ preventScroll: true });
+
+  peek.addEventListener("click", function () {
+    var show = pwd.type === "password";
+    pwd.type = show ? "text" : "password";
+    peek.textContent = show ? "隐藏" : "显示";
+    peek.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
+    pwd.focus({ preventScroll: true });
+  });
+
+  form.addEventListener("submit", function (e) {
+    if (!pwd.value) {
+      e.preventDefault();
+      errText.textContent = "请输入密码。";
+      errBox.classList.add("show");
+      pwd.focus({ preventScroll: true });
+      return;
+    }
+    submit.disabled = true;
+    submit.textContent = "验证中…";
+  });
+})();
+</script>
+</body>
+</html>
