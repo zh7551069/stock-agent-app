@@ -1,0 +1,26 @@
+name: liupan_mobile
+description: 蓄势池归因建议切片。手机只走 BFF HTTP，不打开 DuckDB，不代下单。
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  http: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: LiupanSans
+      fonts:
+        - asset: fonts/DroidSansFallback.ttf

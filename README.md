@@ -5,7 +5,8 @@
 这个仓库现在有两块：
 
 1. 种子：原来的 `stock-advice-agent` 和 openclaw 的 `liupan_*.py`。
-2. 第一切片：5 分钟池级扫描落库、持仓按**股**记账、归因 `suggest` / `confirm`。没有 Flutter。
+2. 第一切片：5 分钟池级扫描落库、持仓按**股**记账、归因 `suggest` / `confirm`。
+3. 归因建议 Flutter 切片：`apps/mobile`。对接方式见 `docs/delivery/slice-attr-ui.md`。
 
 契约是 `docs/contracts/arch-C-contracts-v0.2.0-C.md`（v0.2.0-C）。本切片怎么对齐、哪些是假设，写在 `docs/delivery/slice-1-bff.md`。
 
@@ -24,6 +25,7 @@
 | 路径 | 内容 |
 | --- | --- |
 | `apps/bff/` | Flask `server.py`、`config.py`、`core/`、`scripts/`、`ingest/`、`web/`、`tunnel/` |
+| `apps/mobile/` | 归因建议 Flutter。只走 BFF HTTP |
 | `scripts/liupan/` | `liupan_scan.py`、`liupan_live_scan.py`、`liupan_auction_rank.py`、`liupan_auction_replay.py` |
 | `docs/contracts/` | C 契约 |
 | `docs/delivery/` | 切片说明、launchd 示例 |
