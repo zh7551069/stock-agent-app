@@ -1,0 +1,51 @@
+{
+  "nodeId": "17:103",
+  "name": "06 观察列表",
+  "page": "v1主界面",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#151b24",
+    "#243041",
+    "#3b82f6",
+    "#8b9bb4",
+    "#e8eef7",
+    "#ef4444",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    10,
+    11,
+    12,
+    13,
+    15,
+    22
+  ],
+  "gaps_px": [
+    2,
+    4,
+    6,
+    8,
+    12
+  ],
+  "paddings_px": [
+    2,
+    4,
+    6,
+    8,
+    12,
+    16,
+    20
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(239,68,68,0.12)",
+    "rgba(245,158,11,0.18)",
+    "rgba(59,130,246,0.18)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=17-103",
+  "screenshot": "screenshot.png"
+}

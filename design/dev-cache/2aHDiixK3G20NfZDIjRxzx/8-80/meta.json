@@ -1,0 +1,56 @@
+{
+  "nodeId": "8:80",
+  "name": "06 日详情",
+  "page": "复盘v1",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#12171f",
+    "#151b24",
+    "#243041",
+    "#3b82f6",
+    "#5c6b82",
+    "#8b9bb4",
+    "#e8eef7",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    18,
+    22
+  ],
+  "gaps_px": [
+    2,
+    3,
+    4,
+    8,
+    10
+  ],
+  "paddings_px": [
+    2,
+    4,
+    5,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    20
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(245,158,11,0.13)",
+    "rgba(59,130,246,0.13)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=8-80",
+  "screenshot": "screenshot.png"
+}

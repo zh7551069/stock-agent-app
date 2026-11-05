@@ -1,0 +1,64 @@
+{
+  "nodeId": "1:7",
+  "name": "02 盘中先手分榜",
+  "page": "v1主界面",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#151b24",
+    "#1a1520",
+    "#1a2030",
+    "#1e2a3a",
+    "#243041",
+    "#3a1515",
+    "#3a1525",
+    "#3a2410",
+    "#3a2a10",
+    "#3b82f6",
+    "#5c6b82",
+    "#8b9bb4",
+    "#e8eef7",
+    "#ef4444",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    22
+  ],
+  "gaps_px": [
+    2,
+    3,
+    4,
+    6,
+    8,
+    10
+  ],
+  "paddings_px": [
+    2,
+    4,
+    5,
+    6,
+    8,
+    10,
+    16,
+    20,
+    24
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(239,68,68,0.13)",
+    "rgba(245,158,11,0.13)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=1-7",
+  "screenshot": "screenshot.png"
+}

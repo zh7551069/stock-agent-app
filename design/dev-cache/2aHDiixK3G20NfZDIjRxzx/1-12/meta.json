@@ -1,0 +1,63 @@
+{
+  "nodeId": "1:12",
+  "name": "03 单票详情",
+  "page": "v1主界面",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#0f172a",
+    "#151b24",
+    "#1e293b",
+    "#22c55e",
+    "#243041",
+    "#3b82f6",
+    "#475569",
+    "#64748b",
+    "#8b9bb4",
+    "#e8eef7",
+    "#ef4444",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    20,
+    28
+  ],
+  "gaps_px": [
+    2,
+    4,
+    6,
+    8,
+    10
+  ],
+  "paddings_px": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    20,
+    24
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(239,68,68,0.13)",
+    "rgba(245,158,10,0.28)",
+    "rgba(245,158,11,0.09)",
+    "rgba(245,158,11,0.33)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=1-12",
+  "screenshot": "screenshot.png"
+}
