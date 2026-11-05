@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "cache_root": "design/dev-cache",
+  "updated_at": "2026-11-05T12:14:42.050027+00:00",
+  "products": [
+    {
+      "id": "liupan-xianshou",
+      "name": "连板股先手 / 蓄势池",
+      "product_line": "蓄势池",
+      "repo": "zh7551069/stock-agent-app",
+      "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+      "figma_url": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx",
+      "dir": "2aHDiixK3G20NfZDIjRxzx",
+      "status": "cached",
+      "frames_cached": 21
+    }
+  ],
+  "pull": {
+    "confirmed_by": "hui",
+    "scope": "all",
+    "approx_frames": 141,
+    "root": "/workspace/figma-dev-cache",
+    "completed_at": "2026-11-05T12:14:42.050027+00:00",
+    "frames_total": 141,
+    "frames_failed": 0
+  }
+}

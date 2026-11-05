@@ -1,0 +1,63 @@
+{
+  "nodeId": "1:17",
+  "name": "04 设置/数据",
+  "page": "v1主界面",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#0f172a",
+    "#151b24",
+    "#1e293b",
+    "#1e2a3a",
+    "#22c55e",
+    "#243041",
+    "#2a1510",
+    "#2a1f0a",
+    "#3b82f6",
+    "#475569",
+    "#5c6b82",
+    "#8b9bb4",
+    "#e8eef7",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    22
+  ],
+  "gaps_px": [
+    2,
+    3,
+    4,
+    6,
+    8,
+    10,
+    12
+  ],
+  "paddings_px": [
+    4,
+    8,
+    10,
+    12,
+    14,
+    16,
+    20,
+    24
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(34,197,94,0.13)",
+    "rgba(59,130,246,0.13)",
+    "rgba(59,130,246,0.33)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=1-17",
+  "screenshot": "screenshot.png"
+}

@@ -1,0 +1,55 @@
+{
+  "nodeId": "35:194",
+  "name": "10c 归因建议·写入成功",
+  "page": "复盘v1",
+  "fileKey": "2aHDiixK3G20NfZDIjRxzx",
+  "cache_rev": 1,
+  "colors": [
+    "#0b0f14",
+    "#14532d",
+    "#151b24",
+    "#22c55e",
+    "#243041",
+    "#3b82f6",
+    "#5c6b82",
+    "#8b9bb4",
+    "#e8eef7",
+    "#ef4444",
+    "#f59e0b"
+  ],
+  "fontSizes_px": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    22
+  ],
+  "gaps_px": [
+    2,
+    4,
+    6,
+    8,
+    10
+  ],
+  "paddings_px": [
+    3,
+    4,
+    8,
+    10,
+    12,
+    14,
+    16,
+    20
+  ],
+  "radii_px": [
+    0
+  ],
+  "rgba_samples": [
+    "rgba(34,197,94,0.13)"
+  ],
+  "figma": "https://www.figma.com/design/2aHDiixK3G20NfZDIjRxzx?node-id=35-194",
+  "screenshot": "screenshot.png"
+}
