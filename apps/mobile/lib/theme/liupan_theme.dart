@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// 帧面色板。直角 / 小圆角，不自拟大圆角。
+/// 帧面色板。沿用这一套，不另起色板。
 class LiupanColors {
   const LiupanColors._();
 
@@ -18,6 +18,17 @@ class LiupanColors {
   static const chip = Color(0xFF10161E);
   static const suggestedFill = Color(0xFF1A160C);
   static const buttonDark = Color(0xFF1C2430);
+
+  /// 遮罩。约 `rgba(0,0,0,0.67)`。
+  static const scrim = Color.fromRGBO(0, 0, 0, 0.67);
+}
+
+/// 表面、按钮、卡片直角。开关轨道 999；时间线 / 状态圆点用直径的 50%（[BoxShape.circle]）。
+class LiupanRadii {
+  const LiupanRadii._();
+
+  static const surface = BorderRadius.all(Radius.zero);
+  static const switchTrack = BorderRadius.all(Radius.circular(999));
 }
 
 const liupanFont = 'LiupanSans';
@@ -51,7 +62,7 @@ ThemeData buildLiupanTheme() {
   );
 }
 
-/// 触控高度至少 36。稿面按钮约 48，圆角 2。
+/// 触控高度至少 36。主按钮高度约 48，表面直角。
 class LiupanButton extends StatelessWidget {
   const LiupanButton({
     super.key,
@@ -80,7 +91,7 @@ class LiupanButton extends StatelessWidget {
           minimumSize: const Size(0, 48),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(2)),
+            borderRadius: LiupanRadii.surface,
           ),
           textStyle: const TextStyle(
             fontFamily: liupanFont,

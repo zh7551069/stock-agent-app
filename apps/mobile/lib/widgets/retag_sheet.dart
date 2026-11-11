@@ -39,10 +39,10 @@ class _RetagSheetState extends State<RetagSheet> {
         return ConstrainedBox(
           constraints: BoxConstraints(maxHeight: maxHeight),
           child: Material(
-      color: LiupanColors.bg,
+      color: LiupanColors.card,
       child: DecoratedBox(
         decoration: const BoxDecoration(
-          color: LiupanColors.bg,
+          color: LiupanColors.card,
           border: Border(top: BorderSide(color: LiupanColors.border)),
         ),
         child: SingleChildScrollView(
@@ -145,7 +145,7 @@ class _SheetChip extends StatelessWidget {
           decoration: BoxDecoration(
             color: checked ? LiupanColors.suggestedFill : LiupanColors.chip,
             border: Border.all(color: checked ? LiupanColors.amber : LiupanColors.border, width: checked ? 1.5 : 1),
-            borderRadius: const BorderRadius.all(Radius.circular(2)),
+            borderRadius: LiupanRadii.surface,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -157,7 +157,7 @@ class _SheetChip extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: checked ? LiupanColors.amber : Colors.transparent,
                   border: Border.all(color: checked ? LiupanColors.amber : LiupanColors.dim),
-                  borderRadius: const BorderRadius.all(Radius.circular(2)),
+                  borderRadius: LiupanRadii.surface,
                 ),
                 child: checked ? const Icon(Icons.check, size: 12, color: LiupanColors.ink) : null,
               ),

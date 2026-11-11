@@ -21,12 +21,16 @@ class AttrSurface extends StatefulWidget {
     required this.chrome,
     required this.bus,
     required this.onBack,
+    this.onOverlay,
   });
 
   final AttrController controller;
   final AttrChrome chrome;
   final LeaveBus bus;
   final VoidCallback onBack;
+
+  /// 改标 Sheet、离开拦截盖住页面时为 true。壳用来收起底栏。
+  final ValueChanged<bool>? onOverlay;
 
   @override
   State<AttrSurface> createState() => _AttrSurfaceState();
@@ -67,9 +71,14 @@ class _AttrSurfaceState extends State<AttrSurface> {
     if (mounted) setState(() {});
   }
 
+  void _mutate(VoidCallback change) {
+    setState(change);
+    widget.onOverlay?.call(_sheet || _leave);
+  }
+
   Future<bool> _askLeave() {
     if (_sheet) {
-      setState(() => _sheet = false);
+      _mutate(() => _sheet = false);
       return Future.value(false);
     }
     if (widget.controller.confirming) return Future.value(false);
@@ -81,12 +90,12 @@ class _AttrSurfaceState extends State<AttrSurface> {
     if (_wait != null && !_wait!.isCompleted) return _wait!.future;
     _intent = intent;
     _wait = Completer<bool>();
-    setState(() => _leave = true);
+    _mutate(() => _leave = true);
     return _wait!.future;
   }
 
   void _stay() {
-    setState(() => _leave = false);
+    _mutate(() => _leave = false);
     final wait = _wait;
     _wait = null;
     if (wait != null && !wait.isCompleted) wait.complete(false);
@@ -94,7 +103,7 @@ class _AttrSurfaceState extends State<AttrSurface> {
 
   void _discard() {
     widget.controller.discardLocal();
-    setState(() => _leave = false);
+    _mutate(() => _leave = false);
     final wait = _wait;
     _wait = null;
     final intent = _intent;
@@ -120,7 +129,7 @@ class _AttrSurfaceState extends State<AttrSurface> {
 
   void _apply(List<String> tags) {
     widget.controller.applyRetag(tags);
-    setState(() => _sheet = false);
+    _mutate(() => _sheet = false);
   }
 
   String _subtitle() {
@@ -163,7 +172,7 @@ class _AttrSurfaceState extends State<AttrSurface> {
                     AttrSection(
                       controller: controller,
                       reviewCard: widget.chrome == AttrChrome.reviewCard,
-                      onRetag: () => setState(() => _sheet = true),
+                      onRetag: () => _mutate(() => _sheet = true),
                       onConfirm: controller.confirmWrite,
                       onRetry: controller.load,
                     ),
@@ -175,8 +184,8 @@ class _AttrSurfaceState extends State<AttrSurface> {
           if (_sheet) ...[
             Positioned.fill(
               child: GestureDetector(
-                onTap: () => setState(() => _sheet = false),
-                child: const ColoredBox(color: Color(0x99000000)),
+                onTap: () => _mutate(() => _sheet = false),
+                child: const ColoredBox(color: LiupanColors.scrim),
               ),
             ),
             Align(
@@ -184,13 +193,13 @@ class _AttrSurfaceState extends State<AttrSurface> {
               child: RetagSheet(
                 initial: controller.localTags,
                 catalog: catalog,
-                onCancel: () => setState(() => _sheet = false),
+                onCancel: () => _mutate(() => _sheet = false),
                 onApply: _apply,
               ),
             ),
           ],
           if (_leave) ...[
-            const Positioned.fill(child: ColoredBox(color: Color(0x99000000))),
+            const Positioned.fill(child: ColoredBox(color: LiupanColors.scrim)),
             LeaveDialog(onStay: _stay, onDiscard: _discard),
           ],
         ],

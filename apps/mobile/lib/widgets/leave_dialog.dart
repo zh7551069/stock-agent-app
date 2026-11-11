@@ -22,7 +22,7 @@ class LeaveDialog extends StatelessWidget {
         decoration: BoxDecoration(
           color: LiupanColors.card,
           border: Border.all(color: LiupanColors.amber, width: 1.5),
-          borderRadius: const BorderRadius.all(Radius.circular(2)),
+          borderRadius: LiupanRadii.surface,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
