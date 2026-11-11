@@ -48,14 +48,18 @@ String stockTitle(String? name, String code) {
   return '$trimmed $shown';
 }
 
-/// 基准收益。pending 与 0 / 0% 都显示 pending，禁止显示 0%。
+/// 基准收益。用户看到「待验证」。
+/// `pending`、空值、0 / 0% / 0.0% 都落成「待验证」，禁止显示 0%（H15）。
 String benchmarkValue(String? raw) {
-  if (raw == null) return 'pending';
+  const pendingLabel = '待验证';
+  if (raw == null) return pendingLabel;
   final text = raw.trim();
-  if (text.isEmpty || text.toLowerCase() == 'pending') return 'pending';
+  if (text.isEmpty || text.toLowerCase() == 'pending' || text == pendingLabel) {
+    return pendingLabel;
+  }
   final compact = text.replaceAll('%', '').trim();
   final number = num.tryParse(compact);
-  if (number != null && number == 0) return 'pending';
+  if (number != null && number == 0) return pendingLabel;
   return text;
 }
 
@@ -227,7 +231,7 @@ String formatEvidence(Object? evidence) {
   return text.isEmpty ? '无证据' : text;
 }
 
-enum ScoreTone { primary, amber, red, missing }
+enum ScoreTone { primary, amber, red, muted, missing }
 
 class ScoreRow {
   const ScoreRow(this.label, this.value, this.tone);
@@ -260,7 +264,7 @@ class ScoreSnapshot {
       ScoreRow('顶格占比', '38%', ScoreTone.amber),
       ScoreRow('动量 / 量比', '3.2', ScoreTone.primary),
       ScoreRow('封单质量', '厚', ScoreTone.primary),
-      ScoreRow('开板次数', '1', ScoreTone.primary),
+      ScoreRow('开板次数', '1', ScoreTone.muted),
     ],
     frameSample: true,
   );

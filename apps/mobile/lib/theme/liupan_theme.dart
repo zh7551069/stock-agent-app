@@ -21,6 +21,16 @@ class LiupanColors {
 
   /// 遮罩。约 `rgba(0,0,0,0.67)`。
   static const scrim = Color.fromRGBO(0, 0, 0, 0.67);
+
+  /// 复盘 v1 帧面上的浅色铺底。主按钮字色仍用 [ink]。
+  static const amberWash = Color.fromRGBO(245, 158, 11, 0.13);
+  static const amberStatus = Color.fromRGBO(245, 158, 11, 0.20);
+  static const amberBadge = Color.fromRGBO(245, 158, 11, 0.18);
+  static const greenWash = Color.fromRGBO(34, 197, 94, 0.13);
+  static const blueWash = Color.fromRGBO(59, 130, 246, 0.13);
+  static const blueBadge = Color.fromRGBO(59, 130, 246, 0.18);
+  static const toastGreen = Color(0xFF14532D);
+  static const nearBoard = Color(0xFF1E2A3A);
 }
 
 /// 表面、按钮、卡片直角。开关轨道 999；时间线 / 状态圆点用直径的 50%（[BoxShape.circle]）。
@@ -70,33 +80,50 @@ class LiupanButton extends StatelessWidget {
     required this.background,
     required this.foreground,
     required this.onPressed,
+    this.borderColor,
+    this.height = 48,
+    this.fontSize = 16,
+    this.fontWeight = FontWeight.w600,
   });
 
   final String label;
   final Color background;
   final Color foreground;
   final VoidCallback? onPressed;
+  final Color? borderColor;
+  final double height;
+  final double fontSize;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
+    final side = borderColor == null
+        ? BorderSide.none
+        : BorderSide(color: borderColor!);
     return SizedBox(
-      height: 48,
+      height: height,
       child: TextButton(
         onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: background,
-          foregroundColor: foreground,
-          disabledBackgroundColor: background,
-          disabledForegroundColor: foreground,
-          minimumSize: const Size(0, 48),
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(background),
+          foregroundColor: WidgetStateProperty.all(foreground),
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          elevation: WidgetStateProperty.all(0),
+          minimumSize: WidgetStateProperty.all(Size(0, height)),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shape: const RoundedRectangleBorder(
-            borderRadius: LiupanRadii.surface,
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: LiupanRadii.surface,
+              side: side,
+            ),
           ),
-          textStyle: const TextStyle(
-            fontFamily: liupanFont,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+          textStyle: WidgetStateProperty.all(
+            TextStyle(
+              fontFamily: liupanFont,
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+            ),
           ),
         ),
         child: Text(label),

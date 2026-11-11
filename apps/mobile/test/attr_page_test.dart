@@ -66,6 +66,12 @@ void main() {
     expect(find.text('建议'), findsNWidgets(2));
     expect(find.text('未写入决策记录'), findsOneWidget);
     expect(find.text('0%'), findsNothing);
+    expect(find.text('0.0%'), findsNothing);
+    expect(find.text('pending'), findsNothing);
+    expect(find.text('待验证'), findsNWidgets(2));
+    expect(find.text('T 收盘'), findsOneWidget);
+    expect(find.text('T 收益'), findsNothing);
+    expect(find.text('✓'), findsNWidgets(2));
     expect(find.text('0.72'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('open-retag')));
@@ -93,6 +99,14 @@ void main() {
     expect(find.text('已确认写入 ✓'), findsOneWidget);
     expect(find.text('建议'), findsNothing);
     expect(find.text('归因已确认'), findsOneWidget);
+    expect(find.text('✓'), findsOneWidget);
+    final banner = tester.widget<Container>(
+      find.byKey(const ValueKey('success-banner')),
+    );
+    final bannerDeco = banner.decoration! as BoxDecoration;
+    expect(bannerDeco.color, LiupanColors.toastGreen);
+    expect(bannerDeco.borderRadius, BorderRadius.zero);
+    expect((bannerDeco.border! as Border).top.color, LiupanColors.green);
 
     await tapKey(tester, 'confirmed-cta');
     expect(client.confirmCalls, 1);
@@ -172,7 +186,28 @@ void main() {
     expect(find.text('须确认后写入 · 不自动落库'), findsOneWidget);
     expect(find.text('未写入决策记录'), findsNothing);
     expect(find.text('建议'), findsNWidgets(2));
+    expect(find.text('待验证'), findsNWidgets(2));
+    expect(find.text('0%'), findsNothing);
+    expect(find.text('pending'), findsNothing);
+    expect(find.text('✓'), findsNothing);
+    expect(find.text('当时分数拆解'), findsOneWidget);
     expect(client.confirmCalls, 0);
+
+    final badge = tester.widget<Text>(find.text('未确认'));
+    expect(badge.style?.fontFamily, liupanFont);
+    expect(badge.style?.fontSize, 11);
+    expect(badge.style?.fontWeight, FontWeight.w600);
+    expect(badge.style?.color, LiupanColors.amber);
+    final chip = tester.widget<DecoratedBox>(
+      find.descendant(
+        of: find.byKey(const ValueKey('unconfirmed-badge')),
+        matching: find.byType(DecoratedBox),
+      ),
+    );
+    final deco = chip.decoration as BoxDecoration;
+    expect(deco.color, LiupanColors.amberWash);
+    expect(deco.borderRadius, BorderRadius.zero);
+    expect((deco.border! as Border).top.color, LiupanColors.amber);
   });
 
   testWidgets('证据区露出 suggested_asof，且只读', (tester) async {
