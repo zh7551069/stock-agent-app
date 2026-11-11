@@ -17,11 +17,11 @@ class LeaveDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 28),
-        padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+        margin: const EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
         decoration: BoxDecoration(
           color: LiupanColors.card,
-          border: Border.all(color: LiupanColors.amber, width: 1.5),
+          border: Border.all(color: LiupanColors.amber),
           borderRadius: LiupanRadii.surface,
         ),
         child: Column(
@@ -30,32 +30,56 @@ class LeaveDialog extends StatelessWidget {
           children: [
             const Text(
               '尚未确认写入',
-              style: TextStyle(color: LiupanColors.amber, fontSize: 18, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                fontFamily: liupanFont,
+                color: LiupanColors.amber,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                height: 1.2,
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             const Text(
               '归因仍为建议预勾状态，未写入决策记录。离开将丢弃本次改动；系统不会自动落库。',
-              style: TextStyle(color: LiupanColors.text, fontSize: 14, height: 1.45),
+              style: TextStyle(
+                fontFamily: liupanFont,
+                color: LiupanColors.text,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                height: 1.45,
+              ),
             ),
             const SizedBox(height: 12),
             const Text(
               '须确认后写入 · 不自动落库',
-              style: TextStyle(color: LiupanColors.blue, fontSize: 13),
+              style: TextStyle(
+                fontFamily: liupanFont,
+                color: LiupanColors.blue,
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                height: 1.2,
+              ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             LiupanButton(
               key: const ValueKey('stay-confirm'),
               label: '返回确认',
               background: LiupanColors.amber,
               foreground: LiupanColors.ink,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              height: 44,
               onPressed: onStay,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             LiupanButton(
               key: const ValueKey('discard-leave'),
               label: '放弃并离开',
-              background: LiupanColors.buttonDark,
-              foreground: LiupanColors.text,
+              background: LiupanColors.bg,
+              foreground: LiupanColors.muted,
+              borderColor: LiupanColors.border,
+              fontSize: 14,
+              height: 44,
               onPressed: onDiscard,
             ),
           ],

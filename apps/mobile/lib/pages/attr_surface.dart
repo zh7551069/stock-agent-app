@@ -13,7 +13,7 @@ import '../theme/liupan_theme.dart';
 
 enum AttrChrome { fullPage, reviewCard }
 
-/// 全页（35:2 / 35:98 / 35:194 / 35:290）和复盘卡（8:99）共用。
+/// 全页（复盘 v1 帧 6–9）和单票复盘（帧 3）共用。状态机仍是 [AttrController]。
 class AttrSurface extends StatefulWidget {
   const AttrSurface({
     super.key,
@@ -163,19 +163,31 @@ class _AttrSurfaceState extends State<AttrSurface> {
                 onReplay: _replay,
               ),
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
+                child: Stack(
                   children: [
-                    if (controller.showConfirmed) const SuccessBanner(),
-                    ScoreBlock(score: ScoreSnapshot.forCode(controller.code)),
-                    const SizedBox(height: 16),
-                    AttrSection(
-                      controller: controller,
-                      reviewCard: widget.chrome == AttrChrome.reviewCard,
-                      onRetag: () => _mutate(() => _sheet = true),
-                      onConfirm: controller.confirmWrite,
-                      onRetry: controller.load,
+                    ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+                      children: [
+                        ScoreBlock(
+                          score: ScoreSnapshot.forCode(controller.code),
+                        ),
+                        const SizedBox(height: 10),
+                        AttrSection(
+                          controller: controller,
+                          reviewCard: widget.chrome == AttrChrome.reviewCard,
+                          onRetag: () => _mutate(() => _sheet = true),
+                          onConfirm: controller.confirmWrite,
+                          onRetry: controller.load,
+                        ),
+                      ],
                     ),
+                    if (controller.showConfirmed)
+                      const Positioned(
+                        top: 4,
+                        left: 24,
+                        right: 24,
+                        child: SuccessBanner(),
+                      ),
                   ],
                 ),
               ),

@@ -30,23 +30,34 @@ class StockHeader extends StatelessWidget {
   }
 }
 
+/// 已确认帧上的浮条。盖在内容上，不把分数区往下推。
 class SuccessBanner extends StatelessWidget {
   const SuccessBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const ValueKey('success-banner'),
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      decoration: const BoxDecoration(
-        color: LiupanColors.green,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: LiupanColors.toastGreen,
+        border: Border.all(color: LiupanColors.green),
         borderRadius: LiupanRadii.surface,
       ),
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.check, color: Colors.white, size: 18),
+          Text(
+            '✓',
+            style: TextStyle(
+              fontFamily: liupanFont,
+              color: LiupanColors.green,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+            ),
+          ),
           SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -55,19 +66,22 @@ class SuccessBanner extends StatelessWidget {
                 Text(
                   '归因已写入决策记录',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
+                    fontFamily: liupanFont,
+                    color: LiupanColors.text,
+                    fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    height: 1.3,
+                    height: 1.2,
                   ),
                 ),
                 SizedBox(height: 2),
                 Text(
                   '人工确认完成 · 非自动落库',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    height: 1.3,
+                    fontFamily: liupanFont,
+                    color: LiupanColors.muted,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    height: 1.2,
                   ),
                 ),
               ],

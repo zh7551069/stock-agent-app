@@ -2,13 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:liupan_mobile/model/attr_models.dart';
 
 void main() {
-  test('基准 pending 与 0% 都不显示成 0%', () {
-    expect(benchmarkValue(null), 'pending');
-    expect(benchmarkValue('pending'), 'pending');
-    expect(benchmarkValue('0'), 'pending');
-    expect(benchmarkValue('0%'), 'pending');
-    expect(benchmarkValue('0.0'), 'pending');
+  test('基准待验证与 0% 都不显示成 0%', () {
+    expect(benchmarkValue(null), '待验证');
+    expect(benchmarkValue('pending'), '待验证');
+    expect(benchmarkValue('PENDING'), '待验证');
+    expect(benchmarkValue('待验证'), '待验证');
+    expect(benchmarkValue('0'), '待验证');
+    expect(benchmarkValue('0%'), '待验证');
+    expect(benchmarkValue('0.0'), '待验证');
+    expect(benchmarkValue('0.0%'), '待验证');
     expect(benchmarkValue('1.2%'), '1.2%');
+    expect(benchmarkValue('-1.5%'), '-1.5%');
   });
 
   test('代码归一成后缀式，帧头只显示 6 位', () {
