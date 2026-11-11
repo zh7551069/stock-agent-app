@@ -17,7 +17,7 @@
 
 深链：`/attr?date=YYYY-MM-DD&code=688185.SH&name=康希诺`。`code` 也可以只给 6 位，客户端按后缀式补全后再请求（6/9→`.SH`，0/3→`.SZ`，4/8→`.BJ`）。页头按帧显示 6 位。
 
-底栏五栏：候选 / 先手榜 / 复盘 / 持仓 / 设置。复盘是本切片的业务入口，其余是壳。设置里可以改本次运行的 BFF 地址。
+底栏五栏：候选 / 先手榜 / 复盘 / 持仓 / 设置。冷启动落在候选。复盘仍是归因入口。设置里可以改本次运行的 BFF 地址。A0 壳与顶栏见 `apps/mobile/lib/shell/app_shell.dart`。
 
 ## 接口
 
@@ -111,7 +111,7 @@ Figma 文件 `2aHDiixK3G20NfZDIjRxzx`。
 1. 词表（选股对但择时错、先手分虚高(顶格)、板块共振有效等）来自定稿帧，用来改标。预勾只来自 `suggested_tags`。接口多出来的标签会加在词表后面，不丢。
 2. 「当时分数拆解」第一切片没有 `/detail`。只有康希诺 `688185.SH` 按帧 `8:99` / `35:2` 显示样例读数（先手分 0.72、顶格占比 38% 等），方便对照。其它代码显示「字段缺失」。这些数字不提交。
 3. `回放` 重新 GET suggest。有未确认内容时先走离开拦截，放弃后才重新读取。不写库。
-4. 底栏图标用 Material outlined（列表、奖杯、日历、箱子、齿轮），对应契约里的五栏，没有再引入图标包。
+4. A0 起底栏图标用本批 Bridge 线框 svg（`design/bridge-export/stock/design/v1 主界面/svgs`），不再用五套 Material 图标。选中 `#F59E0B`，未选 `#8B9BB4`。
 5. 中文用 Droid Sans Fallback（Apache-2.0，见 `apps/mobile/fonts/`）。
 6. Web 使用 path URL。`/#/attr?...` 也能解析。
 

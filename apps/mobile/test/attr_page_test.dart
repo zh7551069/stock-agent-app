@@ -161,7 +161,11 @@ void main() {
     usePhone(tester);
     final client = FakeDecisionLogClient(sampleSuggest());
     final controller = await loaded(client);
-    await pumpSurface(tester, controller: controller, chrome: AttrChrome.reviewCard);
+    await pumpSurface(
+      tester,
+      controller: controller,
+      chrome: AttrChrome.reviewCard,
+    );
 
     expect(find.text('单票复盘 · 2026-11-03'), findsOneWidget);
     expect(find.text('未确认'), findsOneWidget);
@@ -178,7 +182,10 @@ void main() {
     await pumpSurface(tester, controller: controller);
     await tester.tap(find.byKey(const ValueKey('evidence-toggle')));
     await tester.pump();
-    expect(find.textContaining('suggested_asof  2026-11-03 15:00:00'), findsOneWidget);
+    expect(
+      find.textContaining('suggested_asof  2026-11-03 15:00:00'),
+      findsOneWidget,
+    );
     expect(find.textContaining('from: selftest'), findsOneWidget);
     expect(client.confirmCalls, 0);
   });
@@ -189,6 +196,8 @@ void main() {
     await tester.pumpWidget(LiupanApp(client: client));
     await tester.pump();
 
+    await tester.tap(find.byKey(const ValueKey('tab-复盘')));
+    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('open-review-sample')));
     await tester.pump();
     await tester.pump();

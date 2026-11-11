@@ -27,7 +27,7 @@ class ScoreBlock extends StatelessWidget {
           decoration: BoxDecoration(
             color: LiupanColors.card,
             border: Border.all(color: LiupanColors.border),
-            borderRadius: const BorderRadius.all(Radius.circular(2)),
+            borderRadius: LiupanRadii.surface,
           ),
           child: Column(
             children: [
@@ -105,7 +105,7 @@ class _BenchmarkCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: LiupanColors.card,
         border: Border.all(color: LiupanColors.border),
-        borderRadius: const BorderRadius.all(Radius.circular(2)),
+        borderRadius: LiupanRadii.surface,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

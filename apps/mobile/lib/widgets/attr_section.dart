@@ -169,7 +169,7 @@ class _TitleRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               border: Border.all(color: LiupanColors.amber),
-              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              borderRadius: LiupanRadii.surface,
             ),
             child: const Text('未确认', style: TextStyle(color: LiupanColors.amber, fontSize: 12)),
           ),
@@ -192,7 +192,7 @@ class _Callout extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       decoration: BoxDecoration(
         border: Border.all(color: color),
-        borderRadius: const BorderRadius.all(Radius.circular(2)),
+        borderRadius: LiupanRadii.surface,
       ),
       child: Text(text, style: TextStyle(color: color, fontSize: 13)),
     );
@@ -227,7 +227,7 @@ class _EvidencePanelState extends State<_EvidencePanel> {
             decoration: BoxDecoration(
               color: LiupanColors.card,
               border: Border.all(color: LiupanColors.border),
-              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              borderRadius: LiupanRadii.surface,
             ),
             child: Text(
               _open ? '证据（辅） · 点击收起' : '证据（辅） · 点击展开',
@@ -243,7 +243,7 @@ class _EvidencePanelState extends State<_EvidencePanel> {
             decoration: BoxDecoration(
               color: LiupanColors.card,
               border: Border.all(color: LiupanColors.border),
-              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              borderRadius: LiupanRadii.surface,
             ),
             child: Text(
               'suggested_asof  ${controller.suggestedAsOf ?? '—'}\n'
@@ -307,7 +307,7 @@ class _SuggestChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: LiupanColors.suggestedFill,
         border: Border.all(color: LiupanColors.amber, width: 1.5),
-        borderRadius: const BorderRadius.all(Radius.circular(2)),
+        borderRadius: LiupanRadii.surface,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -323,7 +323,7 @@ class _SuggestChip extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
               decoration: const BoxDecoration(
                 color: LiupanColors.amber,
-                borderRadius: BorderRadius.all(Radius.circular(2)),
+                borderRadius: LiupanRadii.surface,
               ),
               child: const Text(
                 '建议',
@@ -362,7 +362,7 @@ class _IdleGrid extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: LiupanColors.chip,
                     border: Border.all(color: LiupanColors.border),
-                    borderRadius: const BorderRadius.all(Radius.circular(2)),
+                    borderRadius: LiupanRadii.surface,
                   ),
                   child: Text(
                     tag,
@@ -405,7 +405,7 @@ class _ConfirmedChips extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     color: LiupanColors.green,
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                    borderRadius: LiupanRadii.surface,
                   ),
                   child: Text(
                     tag,
@@ -433,7 +433,7 @@ class _ConfirmError extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         border: Border.all(color: LiupanColors.red),
-        borderRadius: const BorderRadius.all(Radius.circular(2)),
+        borderRadius: LiupanRadii.surface,
       ),
       child: Text(
         '确认失败，未写入决策记录\n$message',
@@ -466,7 +466,7 @@ class _StatusRow extends StatelessWidget {
           decoration: BoxDecoration(
             color: confirmed ? LiupanColors.green : Colors.transparent,
             border: Border.all(color: confirmed ? LiupanColors.green : LiupanColors.amber),
-            borderRadius: const BorderRadius.all(Radius.circular(2)),
+            borderRadius: LiupanRadii.surface,
           ),
           child: Text(
             confirmed ? '已写入决策记录' : '未写入决策记录',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'api/decision_log_client.dart';
 import 'model/attr_models.dart';
-import 'pages/shell_page.dart';
+import 'shell/app_shell.dart';
 import 'theme/liupan_theme.dart';
 
 class LiupanApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class LiupanApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: buildLiupanTheme(),
       scrollBehavior: const _NoGlow(),
-      home: ShellPage(client: client, initialBase: initialBase, launch: launch),
+      home: AppShell(client: client, initialBase: initialBase, launch: launch),
     );
   }
 }
@@ -28,7 +28,11 @@ class _NoGlow extends ScrollBehavior {
   const _NoGlow();
 
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child;
   }
 }

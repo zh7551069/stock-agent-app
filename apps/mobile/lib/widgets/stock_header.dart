@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/liupan_theme.dart';
+import 'lp_nav_header.dart';
 
 class StockHeader extends StatelessWidget {
   const StockHeader({
@@ -18,55 +19,13 @@ class StockHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56,
-      child: Row(
-        children: [
-          IconButton(
-            key: const ValueKey('header-back'),
-            onPressed: onBack,
-            icon: const Icon(Icons.chevron_left, color: LiupanColors.text, size: 28),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: LiupanColors.text,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    height: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: LiupanColors.muted, fontSize: 12, height: 1.2),
-                ),
-              ],
-            ),
-          ),
-          TextButton(
-            key: const ValueKey('replay'),
-            onPressed: onReplay,
-            style: TextButton.styleFrom(
-              foregroundColor: LiupanColors.text,
-              minimumSize: const Size(48, 36),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-            ),
-            child: const Text('回放', style: TextStyle(fontSize: 15)),
-          ),
-        ],
-      ),
+    return LpNavHeader.stack(
+      title: title,
+      subtitle: subtitle,
+      onBack: onBack,
+      actionLabel: '回放',
+      onAction: onReplay,
+      actionKey: const ValueKey('replay'),
     );
   }
 }
@@ -82,7 +41,7 @@ class SuccessBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: const BoxDecoration(
         color: LiupanColors.green,
-        borderRadius: BorderRadius.all(Radius.circular(2)),
+        borderRadius: LiupanRadii.surface,
       ),
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,12 +54,21 @@ class SuccessBanner extends StatelessWidget {
               children: [
                 Text(
                   '归因已写入决策记录',
-                  style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700, height: 1.3),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    height: 1.3,
+                  ),
                 ),
                 SizedBox(height: 2),
                 Text(
                   '人工确认完成 · 非自动落库',
-                  style: TextStyle(color: Colors.white, fontSize: 12, height: 1.3),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    height: 1.3,
+                  ),
                 ),
               ],
             ),
